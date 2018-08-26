@@ -1,0 +1,37 @@
+<html>
+
+<head>
+<title>{{.Title}}</title>
+</head>
+
+<body>
+Hello, {{.User.Username}}, your hostname is {{.User.Hostname}}<br><br>
+{{range .User.FriendRequests}}
+    Friend request from {{.Name}}({{.Hostname}}) <a href="/accept?hostname={{.Hostname}}">Accept</a> <a href="/ignore?hostname={{.Hostname}}">Ignore</a><br>
+{{else}}
+    No new friend requests.<br>
+{{end}}
+
+Friends:
+{{range .User.Friends}}
+    {{.Name}}({{.Hostname}})
+{{else}}
+    No friends yet.
+{{end}}
+
+    <form action="/follow" method="POST">
+        <input type="text" name="hostname" placeholder="Hostname(.onion)"><input type="submit" value="Send friend request">
+    </form>
+
+    <form action="/post" method="POST">
+        <input type="text" name="content" placeholder="Write something."><input type="submit" value="Publish">
+    </form>
+
+{{range .Feed}}
+    {{.PostedBy}}: "{{.Content}}"<br><br>
+{{else}}
+    No new posts.
+{{end}}
+</body>
+
+</html>
